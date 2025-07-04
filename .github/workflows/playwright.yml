@@ -9,6 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -24,8 +25,14 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests
-        run: npx playwright test
+      - name: Run Playwright tests (HTML report)
+        run: npx playwright test --reporter=html
+
+      - name: List files for debug
+        run: ls -l
+
+      - name: List report folder
+        run: ls -l playwright-report || echo "No report folder"
 
       - name: Upload Playwright HTML report
         if: always()
