@@ -1,24 +1,24 @@
 # Estrutura de Testes
 
-Esta pasta contém todos os testes automatizados do projeto.
+Esta pasta contém todos os testes automatizados do projeto, implementados em **JavaScript**.
 
 ## Organização
 
 ```
 tests/
 ├── e2e/           # Testes end-to-end
-│   ├── login.spec.ts
-│   ├── inventory.spec.ts
-│   ├── cart.spec.ts
-│   ├── checkout.spec.ts
-│   ├── menu.spec.ts
-│   ├── inventory-optimized.spec.ts    # Exemplo otimizado
-│   ├── cart-optimized.spec.ts         # Exemplo otimizado
-│   └── checkout-optimized.spec.ts     # Exemplo otimizado
+│   ├── login.spec.js
+│   ├── inventory.spec.js
+│   ├── cart.spec.js
+│   ├── checkout.spec.js
+│   ├── menu.spec.js
+│   ├── inventory-optimized.spec.js    # Exemplo otimizado
+│   ├── cart-optimized.spec.js         # Exemplo otimizado
+│   └── checkout-optimized.spec.js     # Exemplo otimizado
 ├── fixtures/      # Fixtures compartilhadas
-│   ├── global.fixture.ts              # Fixtures para todas as páginas
-│   ├── auth.fixture.ts                # Fixture de autenticação
-│   └── complete.fixture.ts            # Fixture completa (recomendada)
+│   ├── global.fixture.js              # Fixtures para todas as páginas
+│   ├── auth.fixture.js                # Fixture de autenticação
+│   └── complete.fixture.js            # Fixture completa (recomendada)
 └── README.md      # Este arquivo
 ```
 
@@ -32,18 +32,18 @@ Fixtures compartilhadas que podem ser reutilizadas em múltiplos testes para evi
 
 ## Otimizações Implementadas
 
-### 1. Fixtures Globais (`global.fixture.ts`)
+### 1. Fixtures Globais (`global.fixture.js`)
 - Fornece instâncias de todas as páginas (LoginPage, InventoryPage, etc.)
 - Evita criação repetitiva de objetos
 - Melhora a legibilidade dos testes
 
-### 2. Fixture de Autenticação (`auth.fixture.ts`)
+### 2. Fixture de Autenticação (`auth.fixture.js`)
 - **beforeAll**: Login automático antes dos testes
 - **afterAll**: Limpeza automática do estado após cada teste
 - Reduz significativamente o tempo de execução
 - Garante isolamento entre testes
 
-### 3. Fixture Completa (`complete.fixture.ts`) ⭐ **RECOMENDADA**
+### 3. Fixture Completa (`complete.fixture.js`) ⭐ **RECOMENDADA**
 - Combina autenticação automática com todas as páginas
 - Setup e teardown automáticos
 - Máxima otimização de performance
@@ -58,7 +58,7 @@ Fixtures compartilhadas que podem ser reutilizadas em múltiplos testes para evi
 ## Exemplos de Uso
 
 ### Teste Tradicional (sem otimização)
-```typescript
+```javascript
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
@@ -67,8 +67,8 @@ test.beforeEach(async ({ page }) => {
 ```
 
 ### Teste Otimizado (com fixture completa) ⭐ **RECOMENDADO**
-```typescript
-import { test, expect } from '../fixtures/complete.fixture';
+```javascript
+const { test, expect } = require('../fixtures/complete.fixture');
 
 test('Meu teste', async ({ authenticatedPage, inventoryPage, cartPage }) => {
   // Teste já começa logado, limpo e com todas as páginas disponíveis
@@ -78,8 +78,8 @@ test('Meu teste', async ({ authenticatedPage, inventoryPage, cartPage }) => {
 ```
 
 ### Teste com beforeAll/afterAll
-```typescript
-import { test, expect } from '../fixtures/global.fixture';
+```javascript
+const { test, expect } = require('../fixtures/global.fixture');
 
 test.beforeAll(async ({ loginPage }) => {
   await loginPage.goto();
@@ -98,10 +98,10 @@ test.afterAll(async ({ menuPage }) => {
 npx playwright test
 
 # Executar testes específicos
-npx playwright test tests/e2e/login.spec.ts
+npx playwright test tests/e2e/login.spec.js
 
 # Executar testes otimizados
-npx playwright test tests/e2e/*-optimized.spec.ts
+npx playwright test tests/e2e/*-optimized.spec.js
 
 # Executar em modo UI
 npx playwright test --ui
@@ -112,10 +112,10 @@ npx playwright test --headed
 
 ## Convenções
 
-- Todos os arquivos de teste devem terminar com `.spec.ts`
+- Todos os arquivos de teste devem terminar com `.spec.js`
 - Use Page Object Model para organizar os seletores e métodos
 - Mantenha os testes independentes e isolados
 - Use fixtures para código compartilhado
-- **Prefira `complete.fixture.ts` para novos testes**
+- **Prefira `complete.fixture.js` para novos testes**
 - Use `beforeAll`/`afterAll` para setup/teardown global
 - Use `beforeEach`/`afterEach` apenas quando necessário 

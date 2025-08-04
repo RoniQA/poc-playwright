@@ -1,6 +1,6 @@
 # poc-playwright
 
-Este projeto é uma prova de conceito usando Playwright com estrutura organizada seguindo as melhores práticas.
+Este projeto é uma prova de conceito usando Playwright com estrutura organizada seguindo as melhores práticas, implementado em **JavaScript**.
 
 ## 📁 Estrutura do Projeto
 
@@ -8,26 +8,26 @@ Este projeto é uma prova de conceito usando Playwright com estrutura organizada
 poc-playwright/
 ├── tests/                    # Pasta para todos os testes
 │   ├── e2e/                 # Testes end-to-end
-│   │   ├── login.spec.ts
-│   │   ├── inventory.spec.ts
-│   │   ├── cart.spec.ts
-│   │   ├── checkout.spec.ts
-│   │   ├── menu.spec.ts
-│   │   ├── inventory-optimized.spec.ts    # Exemplo otimizado
-│   │   ├── cart-optimized.spec.ts         # Exemplo otimizado
-│   │   └── checkout-optimized.spec.ts     # Exemplo otimizado
+│   │   ├── login.spec.js
+│   │   ├── inventory.spec.js
+│   │   ├── cart.spec.js
+│   │   ├── checkout.spec.js
+│   │   ├── menu.spec.js
+│   │   ├── inventory-optimized.spec.js    # Exemplo otimizado
+│   │   ├── cart-optimized.spec.js         # Exemplo otimizado
+│   │   └── checkout-optimized.spec.js     # Exemplo otimizado
 │   ├── fixtures/            # Fixtures compartilhadas
-│   │   ├── global.fixture.ts              # Fixtures para todas as páginas
-│   │   ├── auth.fixture.ts                # Fixture de autenticação
-│   │   └── complete.fixture.ts            # Fixture completa (recomendada)
+│   │   ├── global.fixture.js              # Fixtures para todas as páginas
+│   │   ├── auth.fixture.js                # Fixture de autenticação
+│   │   └── complete.fixture.js            # Fixture completa (recomendada)
 │   └── README.md
 ├── Pages/                   # Page Objects
-│   ├── LoginPage.ts
-│   ├── InventoryPage.ts
-│   ├── CartPage.ts
-│   ├── CheckoutPage.ts
-│   └── MenuPage.ts
-├── playwright.config.ts     # Configuração do Playwright
+│   ├── LoginPage.js
+│   ├── InventoryPage.js
+│   ├── CartPage.js
+│   ├── CheckoutPage.js
+│   └── MenuPage.js
+├── playwright.config.js     # Configuração do Playwright
 └── package.json
 ```
 
@@ -44,10 +44,10 @@ npm install
 npm run test
 
 # Executar testes específicos
-npx playwright test tests/e2e/login.spec.ts
+npx playwright test tests/e2e/login.spec.js
 
 # Executar testes otimizados
-npx playwright test tests/e2e/*-optimized.spec.ts
+npx playwright test tests/e2e/*-optimized.spec.js
 
 # Executar em modo headed (com navegador visível)
 npm run test:headed
@@ -76,6 +76,7 @@ npm run report
 - ✅ **Otimização com beforeAll/afterAll**: Setup e teardown eficientes
 - ✅ **Isolamento de testes**: Limpeza automática do estado entre testes
 - ✅ **Fixture completa**: Máxima otimização com setup automático
+- ✅ **JavaScript puro**: Sem dependências de TypeScript
 
 ## ⚡ Otimizações de Performance
 
@@ -104,8 +105,8 @@ npm run report
 ## 🎯 Exemplos de Uso
 
 ### Teste Otimizado (Recomendado)
-```typescript
-import { test, expect } from '../fixtures/complete.fixture';
+```javascript
+const { test, expect } = require('../fixtures/complete.fixture');
 
 test('Meu teste', async ({ authenticatedPage, inventoryPage, cartPage }) => {
   // Teste já começa logado, limpo e com todas as páginas disponíveis
@@ -118,7 +119,7 @@ test('Meu teste', async ({ authenticatedPage, inventoryPage, cartPage }) => {
 
 - Playwright
 - Node.js
-- TypeScript
+- JavaScript
 
 ## 👤 Autor
 
