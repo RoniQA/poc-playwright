@@ -15,21 +15,37 @@ export class LoginPage {
     this.errorMessage = page.locator('[data-test="error"]');
   }
 
+  /**
+   * Navega para a página de login do SauceDemo.
+   */
   async goto() {
     await this.page.goto('https://www.saucedemo.com/');
   }
 
+  /**
+   * Realiza login com usuário e senha.
+   * @param username Usuário a ser utilizado no login
+   * @param password Senha a ser utilizada no login
+   */
   async login(username: string, password: string) {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
     await this.loginButton.click();
   }
 
+  /**
+   * Realiza login preenchendo apenas o usuário.
+   * @param username Usuário a ser utilizado no login
+   */
   async loginWithOnlyUsername(username: string) {
     await this.usernameInput.fill(username);
     await this.loginButton.click();
   }
 
+  /**
+   * Realiza login preenchendo apenas a senha.
+   * @param password Senha a ser utilizada no login
+   */
   async loginWithOnlyPassword(password: string) {
     await this.passwordInput.fill(password);
     await this.loginButton.click();
