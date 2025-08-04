@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from './Pages/LoginPage';
-import { InventoryPage } from './Pages/InventoryPage';
-import { CartPage } from './Pages/CartPage';
+import { LoginPage } from '../../Pages/LoginPage';
+import { InventoryPage } from '../../Pages/InventoryPage';
+import { CartPage } from '../../Pages/CartPage';
 
 test.describe('SauceDemo Carrinho - Page Object Model', () => {
   let loginPage: LoginPage;

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from './Pages/LoginPage';
-import { MenuPage } from './Pages/MenuPage';
-import { InventoryPage } from './Pages/InventoryPage';
+import { LoginPage } from '../../Pages/LoginPage';
+import { MenuPage } from '../../Pages/MenuPage';
+import { InventoryPage } from '../../Pages/InventoryPage';
 
 test.describe('SauceDemo Menu - Page Object Model', () => {
   let loginPage: LoginPage;
