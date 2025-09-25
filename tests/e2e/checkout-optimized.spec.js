@@ -1,40 +1,40 @@
 const { test, expect } = require('../fixtures/complete.fixture');
 
-test.describe('SauceDemo Checkout - Otimizado com Complete Fixture', () => {
-  
-  test('Checkout completo com sucesso', async ({ authenticatedPage, inventoryPage, cartPage, checkoutPage }) => {
-    // Adiciona item ao carrinho
+test.describe('SauceDemo Checkout - Optimized with Complete Fixture', () => {
+
+  test('Successful complete checkout', async ({ authenticatedPage, inventoryPage, cartPage, checkoutPage }) => {
+    // Add item to cart
     await inventoryPage.addItemToCartByIndex(0);
     await cartPage.goto();
     await cartPage.checkout();
     
-    // Preenche informações e finaliza
-    await checkoutPage.completeCheckout('João', 'Silva', '12345-678');
+    // Fill information and finish
+    await checkoutPage.completeCheckout('John', 'Silva', '12345-678');
     await expect(checkoutPage.completeHeader).toHaveText('Thank you for your order!');
   });
 
-  test('Checkout com campos obrigatórios vazios', async ({ authenticatedPage, inventoryPage, cartPage, checkoutPage }) => {
+  test('Checkout with empty required fields', async ({ authenticatedPage, inventoryPage, cartPage, checkoutPage }) => {
     await inventoryPage.addItemToCartByIndex(0);
     await cartPage.goto();
     await cartPage.checkout();
     
-    // Tenta continuar sem preencher
+    // Try to continue without filling
     await checkoutPage.continue();
     await expect(checkoutPage.errorMessage).toHaveText('Error: First Name is required');
   });
 
-  test('Cancelar checkout', async ({ authenticatedPage, inventoryPage, cartPage, checkoutPage }) => {
+  test('Cancel checkout', async ({ authenticatedPage, inventoryPage, cartPage, checkoutPage }) => {
     await inventoryPage.addItemToCartByIndex(0);
     await cartPage.goto();
     await cartPage.checkout();
     
-    // Cancela o checkout
+    // Cancel checkout
     await checkoutPage.cancel();
     await expect(authenticatedPage).toHaveURL(/cart.html/);
   });
 
-  test('Checkout com múltiplos itens', async ({ authenticatedPage, inventoryPage, cartPage, checkoutPage }) => {
-    // Adiciona múltiplos itens
+  test('Checkout with multiple items', async ({ authenticatedPage, inventoryPage, cartPage, checkoutPage }) => {
+    // Add multiple items
     await inventoryPage.addItemToCartByIndex(0);
     await inventoryPage.addItemToCartByIndex(1);
     await inventoryPage.addItemToCartByIndex(2);
@@ -43,7 +43,7 @@ test.describe('SauceDemo Checkout - Otimizado com Complete Fixture', () => {
     expect(await cartPage.getCartItemsCount()).toBe(3);
     
     await cartPage.checkout();
-    await checkoutPage.completeCheckout('João', 'Silva', '12345-678');
+    await checkoutPage.completeCheckout('John', 'Silva', '12345-678');
     await expect(checkoutPage.completeHeader).toHaveText('Thank you for your order!');
   });
 }); 

@@ -12,7 +12,7 @@ module.exports = defineConfig({
     trace: 'retain-on-failure',
   },
   retries: 1,
-  workers: 1, // Reduzir para 1 worker para evitar interferência
+  workers: 1, // Reduce to 1 worker to avoid interference
   reporter: [
     ['list'], 
     ['html', { outputFolder: 'playwright-report' }],

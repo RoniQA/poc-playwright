@@ -13,7 +13,7 @@ class CheckoutPage {
   }
 
   /**
-   * Preenche as informações de checkout.
+   * Fills checkout information.
    */
   async fillCheckoutInfo(firstName, lastName, postalCode) {
     await this.firstNameInput.fill(firstName);
@@ -22,28 +22,28 @@ class CheckoutPage {
   }
 
   /**
-   * Continua para a próxima etapa do checkout.
+   * Continues to the next checkout step.
    */
   async continue() {
     await this.continueButton.click();
   }
 
   /**
-   * Finaliza a compra.
+   * Finishes the purchase.
    */
   async finish() {
     await this.finishButton.click();
   }
 
   /**
-   * Cancela o checkout.
+   * Cancels the checkout.
    */
   async cancel() {
     await this.cancelButton.click();
   }
 
   /**
-   * Completa todo o processo de checkout.
+   * Completes the entire checkout process.
    */
   async completeCheckout(firstName, lastName, postalCode) {
     await this.fillCheckoutInfo(firstName, lastName, postalCode);
@@ -52,14 +52,14 @@ class CheckoutPage {
   }
 
   /**
-   * Retorna a mensagem de erro, se houver.
+   * Returns the error message, if any.
    */
   async getErrorMessage() {
     return await this.errorMessage.textContent() || '';
   }
 
   /**
-   * Verifica se o checkout foi completado com sucesso.
+   * Checks if checkout was completed successfully.
    */
   async isCheckoutComplete() {
     return await this.completeHeader.isVisible();

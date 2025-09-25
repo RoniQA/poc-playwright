@@ -20,76 +20,76 @@ test.describe('SauceDemo Checkout - Page Object Model', () => {
     await expect(page).toHaveURL(/inventory.html/);
   });
 
-  test('Checkout completo com sucesso', async ({ page }) => {
-    // Adiciona item ao carrinho
+  test('Successful complete checkout', async ({ page }) => {
+    // Add item to cart
     await inventoryPage.addItemToCartByIndex(0);
     await cartPage.goto();
     await cartPage.checkout();
     
-    // Preenche informações e finaliza
-    await checkoutPage.completeCheckout('João', 'Silva', '12345-678');
+    // Fill information and finish
+    await checkoutPage.completeCheckout('John', 'Silva', '12345-678');
     await expect(checkoutPage.completeHeader).toHaveText('Thank you for your order!');
   });
 
-  test('Checkout com campos obrigatórios vazios', async ({ page }) => {
+  test('Checkout with empty required fields', async ({ page }) => {
     await inventoryPage.addItemToCartByIndex(0);
     await cartPage.goto();
     await cartPage.checkout();
     
-    // Tenta continuar sem preencher
+    // Try to continue without filling
     await checkoutPage.continue();
     await expect(checkoutPage.errorMessage).toHaveText('Error: First Name is required');
   });
 
-  test('Checkout com apenas primeiro nome preenchido', async ({ page }) => {
+  test('Checkout with only first name filled', async ({ page }) => {
     await inventoryPage.addItemToCartByIndex(0);
     await cartPage.goto();
     await cartPage.checkout();
     
-    // Preenche apenas o primeiro nome
-    await checkoutPage.firstNameInput.fill('João');
+    // Fill only first name
+    await checkoutPage.firstNameInput.fill('John');
     await checkoutPage.continue();
     await expect(checkoutPage.errorMessage).toHaveText('Error: Last Name is required');
   });
 
-  test('Checkout com apenas nome e sobrenome preenchidos', async ({ page }) => {
+  test('Checkout with only name and surname filled', async ({ page }) => {
     await inventoryPage.addItemToCartByIndex(0);
     await cartPage.goto();
     await cartPage.checkout();
     
-    // Preenche nome e sobrenome
-    await checkoutPage.firstNameInput.fill('João');
+    // Fill name and surname
+    await checkoutPage.firstNameInput.fill('John');
     await checkoutPage.lastNameInput.fill('Silva');
     await checkoutPage.continue();
     await expect(checkoutPage.errorMessage).toHaveText('Error: Postal Code is required');
   });
 
-  test('Cancelar checkout', async ({ page }) => {
+  test('Cancel checkout', async ({ page }) => {
     await inventoryPage.addItemToCartByIndex(0);
     await cartPage.goto();
     await cartPage.checkout();
     
-    // Cancela o checkout
+    // Cancel checkout
     await checkoutPage.cancel();
     await expect(page).toHaveURL(/cart.html/);
   });
 
-  test('Validar informações do checkout', async ({ page }) => {
+  test('Validate checkout information', async ({ page }) => {
     await inventoryPage.addItemToCartByIndex(0);
     await cartPage.goto();
     await cartPage.checkout();
     
-    // Preenche informações
-    await checkoutPage.fillCheckoutInfo('João', 'Silva', '12345-678');
+    // Fill information
+    await checkoutPage.fillCheckoutInfo('John', 'Silva', '12345-678');
     await checkoutPage.continue();
     
-    // Verifica se está na página de resumo
+    // Check if on summary page
     await expect(checkoutPage.summaryInfo).toBeVisible();
     await expect(checkoutPage.finishButton).toBeVisible();
   });
 
-  test('Checkout com múltiplos itens', async ({ page }) => {
-    // Adiciona múltiplos itens
+  test('Checkout with multiple items', async ({ page }) => {
+    // Add multiple items
     await inventoryPage.addItemToCartByIndex(0);
     await inventoryPage.addItemToCartByIndex(1);
     await inventoryPage.addItemToCartByIndex(2);
@@ -98,7 +98,7 @@ test.describe('SauceDemo Checkout - Page Object Model', () => {
     expect(await cartPage.getCartItemsCount()).toBe(3);
     
     await cartPage.checkout();
-    await checkoutPage.completeCheckout('João', 'Silva', '12345-678');
+    await checkoutPage.completeCheckout('John', 'Silva', '12345-678');
     await expect(checkoutPage.completeHeader).toHaveText('Thank you for your order!');
   });
 }); 

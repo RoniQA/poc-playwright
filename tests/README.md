@@ -1,63 +1,63 @@
-# Estrutura de Testes
+# Test Structure
 
-Esta pasta contém todos os testes automatizados do projeto, implementados em **JavaScript**.
+This folder contains all automated tests for the project, implemented in **JavaScript**.
 
-## Organização
+## Organization
 
 ```
 tests/
-├── e2e/           # Testes end-to-end
+├── e2e/           # End-to-end tests
 │   ├── login.spec.js
 │   ├── inventory.spec.js
 │   ├── cart.spec.js
 │   ├── checkout.spec.js
 │   ├── menu.spec.js
-│   ├── inventory-optimized.spec.js    # Exemplo otimizado
-│   ├── cart-optimized.spec.js         # Exemplo otimizado
-│   └── checkout-optimized.spec.js     # Exemplo otimizado
-├── fixtures/      # Fixtures compartilhadas
-│   ├── global.fixture.js              # Fixtures para todas as páginas
-│   ├── auth.fixture.js                # Fixture de autenticação
-│   └── complete.fixture.js            # Fixture completa (recomendada)
-└── README.md      # Este arquivo
+│   ├── inventory-optimized.spec.js    # Optimized example
+│   ├── cart-optimized.spec.js         # Optimized example
+│   └── checkout-optimized.spec.js     # Optimized example
+├── fixtures/      # Shared fixtures
+│   ├── global.fixture.js              # Fixtures for all pages
+│   ├── auth.fixture.js                # Authentication fixture
+│   └── complete.fixture.js            # Complete fixture (recommended)
+└── README.md      # This file
 ```
 
-## Tipos de Testes
+## Test Types
 
 ### E2E (End-to-End)
-Testes que simulam o comportamento completo do usuário, desde o login até a finalização de compras.
+Tests that simulate complete user behavior, from login to purchase completion.
 
 ### Fixtures
-Fixtures compartilhadas que podem ser reutilizadas em múltiplos testes para evitar duplicação de código.
+Shared fixtures that can be reused in multiple tests to avoid code duplication.
 
-## Otimizações Implementadas
+## Implemented Optimizations
 
-### 1. Fixtures Globais (`global.fixture.js`)
-- Fornece instâncias de todas as páginas (LoginPage, InventoryPage, etc.)
-- Evita criação repetitiva de objetos
-- Melhora a legibilidade dos testes
+### 1. Global Fixtures (`global.fixture.js`)
+- Provides instances of all pages (LoginPage, InventoryPage, etc.)
+- Avoids repetitive object creation
+- Improves test readability
 
-### 2. Fixture de Autenticação (`auth.fixture.js`)
-- **beforeAll**: Login automático antes dos testes
-- **afterAll**: Limpeza automática do estado após cada teste
-- Reduz significativamente o tempo de execução
-- Garante isolamento entre testes
+### 2. Authentication Fixture (`auth.fixture.js`)
+- **beforeAll**: Automatic login before tests
+- **afterAll**: Automatic state cleanup after each test
+- Significantly reduces execution time
+- Ensures isolation between tests
 
-### 3. Fixture Completa (`complete.fixture.js`) ⭐ **RECOMENDADA**
-- Combina autenticação automática com todas as páginas
-- Setup e teardown automáticos
-- Máxima otimização de performance
-- Fácil de usar em qualquer teste
+### 3. Complete Fixture (`complete.fixture.js`) ⭐ **RECOMMENDED**
+- Combines automatic authentication with all pages
+- Automatic setup and teardown
+- Maximum performance optimization
+- Easy to use in any test
 
-### 4. Hooks de Setup/Teardown
-- `test.beforeAll()`: Executa uma vez antes de todos os testes do describe
-- `test.afterAll()`: Executa uma vez após todos os testes do describe
-- `test.beforeEach()`: Executa antes de cada teste individual
-- `test.afterEach()`: Executa após cada teste individual
+### 4. Setup/Teardown Hooks
+- `test.beforeAll()`: Executes once before all tests in describe
+- `test.afterAll()`: Executes once after all tests in describe
+- `test.beforeEach()`: Executes before each individual test
+- `test.afterEach()`: Executes after each individual test
 
-## Exemplos de Uso
+## Usage Examples
 
-### Teste Tradicional (sem otimização)
+### Traditional Test (without optimization)
 ```javascript
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -66,18 +66,18 @@ test.beforeEach(async ({ page }) => {
 });
 ```
 
-### Teste Otimizado (com fixture completa) ⭐ **RECOMENDADO**
+### Optimized Test (with complete fixture) ⭐ **RECOMMENDED**
 ```javascript
 const { test, expect } = require('../fixtures/complete.fixture');
 
-test('Meu teste', async ({ authenticatedPage, inventoryPage, cartPage }) => {
-  // Teste já começa logado, limpo e com todas as páginas disponíveis
+test('My test', async ({ authenticatedPage, inventoryPage, cartPage }) => {
+  // Test starts already logged in, clean and with all pages available
   await inventoryPage.addItemToCartByIndex(0);
   await cartPage.goto();
 });
 ```
 
-### Teste com beforeAll/afterAll
+### Test with beforeAll/afterAll
 ```javascript
 const { test, expect } = require('../fixtures/global.fixture');
 
@@ -91,31 +91,31 @@ test.afterAll(async ({ menuPage }) => {
 });
 ```
 
-## Executando os Testes
+## Running Tests
 
 ```bash
-# Executar todos os testes
+# Run all tests
 npx playwright test
 
-# Executar testes específicos
+# Run specific tests
 npx playwright test tests/e2e/login.spec.js
 
-# Executar testes otimizados
+# Run optimized tests
 npx playwright test tests/e2e/*-optimized.spec.js
 
-# Executar em modo UI
+# Run in UI mode
 npx playwright test --ui
 
-# Executar em modo headed (com navegador visível)
+# Run in headed mode (with visible browser)
 npx playwright test --headed
 ```
 
-## Convenções
+## Conventions
 
-- Todos os arquivos de teste devem terminar com `.spec.js`
-- Use Page Object Model para organizar os seletores e métodos
-- Mantenha os testes independentes e isolados
-- Use fixtures para código compartilhado
-- **Prefira `complete.fixture.js` para novos testes**
-- Use `beforeAll`/`afterAll` para setup/teardown global
-- Use `beforeEach`/`afterEach` apenas quando necessário 
+- All test files should end with `.spec.js`
+- Use Page Object Model to organize selectors and methods
+- Keep tests independent and isolated
+- Use fixtures for shared code
+- **Prefer `complete.fixture.js` for new tests**
+- Use `beforeAll`/`afterAll` for global setup/teardown
+- Use `beforeEach`/`afterEach` only when necessary 

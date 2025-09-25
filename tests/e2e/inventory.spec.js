@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../../Pages/LoginPage');
 const { InventoryPage } = require('../../Pages/InventoryPage');
 
-test.describe('SauceDemo Inventário - Page Object Model', () => {
+test.describe('SauceDemo Inventory - Page Object Model', () => {
   let loginPage;
   let inventoryPage;
 
@@ -14,46 +14,46 @@ test.describe('SauceDemo Inventário - Page Object Model', () => {
     await expect(page).toHaveURL(/inventory.html/);
   });
 
-  test('Validar preços dos produtos', async ({ page }) => {
+  test('Validate product prices', async ({ page }) => {
     const productPrices = await inventoryPage.getProductPrices();
     
-    // Verifica se todos os produtos têm preços válidos
+    // Check if all products have valid prices
     productPrices.forEach(price => {
       expect(price).toMatch(/^\$\d+\.\d{2}$/);
     });
   });
 
-  test('Validar imagens dos produtos', async ({ page }) => {
-    // Verifica se todas as imagens estão carregadas
+  test('Validate product images', async ({ page }) => {
+    // Check if all images are loaded
     for (let i = 0; i < 6; i++) {
       expect(await inventoryPage.isProductImageLoaded(i)).toBe(true);
     }
   });
 
-  test('Clicar em produto para ver detalhes', async ({ page }) => {
+  test('Click product to view details', async ({ page }) => {
     await inventoryPage.clickProductByIndex(0);
     await expect(page).toHaveURL(/.*\/inventory-item.html/);
   });
 
-  test('Adicionar e remover múltiplos produtos', async ({ page }) => {
-    // Adiciona produtos
+  test('Add and remove multiple products', async ({ page }) => {
+    // Add products
     await inventoryPage.addItemToCartByIndex(0);
     await inventoryPage.addItemToCartByIndex(1);
     await inventoryPage.addItemToCartByIndex(2);
     expect(await inventoryPage.getCartBadgeCount()).toBe(3);
     
-    // Remove produtos
+    // Remove products
     await inventoryPage.removeItemFromCartByIndex(0);
     await inventoryPage.removeItemFromCartByIndex(0);
     await inventoryPage.removeItemFromCartByIndex(0);
     expect(await inventoryPage.getCartBadgeCount()).toBe(0);
   });
 
-  test('Validar quantidade de produtos disponíveis', async ({ page }) => {
+  test('Validate available products quantity', async ({ page }) => {
     const productNames = await inventoryPage.getProductNames();
     const productPrices = await inventoryPage.getProductPrices();
     
-    // Verifica se há 6 produtos (padrão do SauceDemo)
+    // Check if there are 6 products (SauceDemo default)
     expect(productNames.length).toBe(6);
     expect(productPrices.length).toBe(6);
   });

@@ -9,7 +9,7 @@ class CartPage {
   }
 
   /**
-   * Navega para o carrinho clicando no ícone do carrinho.
+   * Navigates to cart by clicking the cart icon.
    */
   async goto() {
     await this.cartIcon.click();
@@ -17,36 +17,36 @@ class CartPage {
   }
 
   /**
-   * Retorna a quantidade de itens no carrinho.
+   * Returns the number of items in cart.
    */
   async getCartItemsCount() {
     return await this.cartItems.count();
   }
 
   /**
-   * Remove todos os itens do carrinho.
+   * Removes all items from cart.
    */
   async removeAllItems() {
     let itemCount = await this.cartItems.count();
     while (itemCount > 0) {
-      // Remove o primeiro item (índice 0)
+      // Remove the first item (index 0)
       await this.removeButtons.first().click();
-      // Aguarda a página atualizar
+      // Wait for page to update
       await this.page.waitForTimeout(500);
-      // Atualiza a contagem
+      // Update the count
       itemCount = await this.cartItems.count();
     }
   }
 
   /**
-   * Clica no botão de checkout.
+   * Clicks the checkout button.
    */
   async checkout() {
     await this.checkoutButton.click();
   }
 
   /**
-   * Clica no botão de continuar comprando.
+   * Clicks the continue shopping button.
    */
   async continueShopping() {
     await this.continueShoppingButton.click();

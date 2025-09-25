@@ -10,21 +10,21 @@ class MenuPage {
   }
 
   /**
-   * Abre o menu hambúrguer.
+   * Opens the hamburger menu.
    */
   async openMenu() {
     await this.menuButton.click();
   }
 
   /**
-   * Fecha o menu hambúrguer.
+   * Closes the hamburger menu.
    */
   async closeMenu() {
     await this.closeMenuButton.click();
   }
 
   /**
-   * Realiza logout da aplicação.
+   * Logs out from the application.
    */
   async logout() {
     await this.openMenu();
@@ -32,7 +32,7 @@ class MenuPage {
   }
 
   /**
-   * Reseta o estado da aplicação (limpa carrinho, etc.).
+   * Resets the application state (clears cart, etc.).
    */
   async resetAppState() {
     await this.openMenu();
@@ -40,7 +40,7 @@ class MenuPage {
   }
 
   /**
-   * Navega para a página "About".
+   * Navigates to the "About" page.
    */
   async goToAbout() {
     await this.openMenu();
@@ -48,7 +48,7 @@ class MenuPage {
   }
 
   /**
-   * Navega para todos os itens (inventário).
+   * Navigates to all items (inventory).
    */
   async goToAllItems() {
     await this.openMenu();

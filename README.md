@@ -1,25 +1,25 @@
 # poc-playwright
 
-Este projeto é uma prova de conceito usando Playwright com estrutura organizada seguindo as melhores práticas, implementado em **JavaScript**.
+This project is a proof of concept using Playwright with an organized structure following best practices, implemented in **JavaScript**.
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 poc-playwright/
-├── tests/                    # Pasta para todos os testes
-│   ├── e2e/                 # Testes end-to-end
+├── tests/                    # Folder for all tests
+│   ├── e2e/                 # End-to-end tests
 │   │   ├── login.spec.js
 │   │   ├── inventory.spec.js
 │   │   ├── cart.spec.js
 │   │   ├── checkout.spec.js
 │   │   ├── menu.spec.js
-│   │   ├── inventory-optimized.spec.js    # Exemplo otimizado
-│   │   ├── cart-optimized.spec.js         # Exemplo otimizado
-│   │   └── checkout-optimized.spec.js     # Exemplo otimizado
-│   ├── fixtures/            # Fixtures compartilhadas
-│   │   ├── global.fixture.js              # Fixtures para todas as páginas
-│   │   ├── auth.fixture.js                # Fixture de autenticação
-│   │   └── complete.fixture.js            # Fixture completa (recomendada)
+│   │   ├── inventory-optimized.spec.js    # Optimized example
+│   │   ├── cart-optimized.spec.js         # Optimized example
+│   │   └── checkout-optimized.spec.js     # Optimized example
+│   ├── fixtures/            # Shared fixtures
+│   │   ├── global.fixture.js              # Fixtures for all pages
+│   │   ├── auth.fixture.js                # Authentication fixture
+│   │   └── complete.fixture.js            # Complete fixture (recommended)
 │   └── README.md
 ├── Pages/                   # Page Objects
 │   ├── LoginPage.js
@@ -27,100 +27,100 @@ poc-playwright/
 │   ├── CartPage.js
 │   ├── CheckoutPage.js
 │   └── MenuPage.js
-├── playwright.config.js     # Configuração do Playwright
+├── playwright.config.js     # Playwright configuration
 └── package.json
 ```
 
-## 💻 Instalação
+## 💻 Installation
 
 ```bash
 npm install
 ```
 
-## 🚀 Rodar os testes
+## 🚀 Running Tests
 
 ```bash
-# Executar todos os testes
+# Run all tests
 npm run test
 
-# Executar testes específicos
+# Run specific tests
 npx playwright test tests/e2e/login.spec.js
 
-# Executar testes otimizados
+# Run optimized tests
 npx playwright test tests/e2e/*-optimized.spec.js
 
-# Executar em modo headed (com navegador visível)
+# Run in headed mode (with visible browser)
 npm run test:headed
 
-# Executar em modo UI
+# Run in UI mode
 npx playwright test --ui
 ```
 
-## 📊 Relatórios
+## 📊 Reports
 
-Após rodar os testes, um relatório HTML será gerado em `playwright-report`.
-Para abrir o relatório, execute:
+After running tests, an HTML report will be generated in `playwright-report`.
+To open the report, run:
 
 ```bash
 npm run report
 ```
 
-## 🔒 Boas práticas implementadas
+## 🔒 Implemented Best Practices
 
-- ✅ **Estrutura organizada**: Testes separados em pasta dedicada
-- ✅ **Page Object Model**: Cada página tem sua classe correspondente
-- ✅ **Fixtures compartilhadas**: Código reutilizável para autenticação
-- ✅ **Configuração otimizada**: Timeouts, retries e relatórios configurados
-- ✅ **Separação por funcionalidade**: Testes organizados por domínio
-- ✅ **Documentação**: README específico para a estrutura de testes
-- ✅ **Otimização com beforeAll/afterAll**: Setup e teardown eficientes
-- ✅ **Isolamento de testes**: Limpeza automática do estado entre testes
-- ✅ **Fixture completa**: Máxima otimização com setup automático
-- ✅ **JavaScript puro**: Sem dependências de TypeScript
+- ✅ **Organized structure**: Tests separated in dedicated folder
+- ✅ **Page Object Model**: Each page has its corresponding class
+- ✅ **Shared fixtures**: Reusable code for authentication
+- ✅ **Optimized configuration**: Timeouts, retries and reports configured
+- ✅ **Separation by functionality**: Tests organized by domain
+- ✅ **Documentation**: Specific README for test structure
+- ✅ **Optimization with beforeAll/afterAll**: Efficient setup and teardown
+- ✅ **Test isolation**: Automatic state cleanup between tests
+- ✅ **Complete fixture**: Maximum optimization with automatic setup
+- ✅ **Pure JavaScript**: No TypeScript dependencies
 
-## ⚡ Otimizações de Performance
+## ⚡ Performance Optimizations
 
-### Fixtures Globais
-- Instâncias de páginas reutilizáveis
-- Redução de código duplicado
-- Melhor legibilidade
+### Global Fixtures
+- Reusable page instances
+- Reduced code duplication
+- Better readability
 
-### Autenticação Otimizada
-- Login executado uma vez por suite de testes
-- Limpeza automática do estado após cada teste
-- Redução significativa no tempo de execução
+### Optimized Authentication
+- Login executed once per test suite
+- Automatic state cleanup after each test
+- Significant reduction in execution time
 
-### Fixture Completa ⭐ **RECOMENDADA**
-- Combina autenticação automática com todas as páginas
-- Setup e teardown automáticos
-- Máxima otimização de performance
-- Fácil de usar em qualquer teste
+### Complete Fixture ⭐ **RECOMMENDED**
+- Combines automatic authentication with all pages
+- Automatic setup and teardown
+- Maximum performance optimization
+- Easy to use in any test
 
-### Hooks Estratégicos
-- `beforeAll`: Setup global para suite de testes
-- `afterAll`: Limpeza final após todos os testes
-- `beforeEach`: Setup individual quando necessário
-- `afterEach`: Limpeza individual quando necessário
+### Strategic Hooks
+- `beforeAll`: Global setup for test suite
+- `afterAll`: Final cleanup after all tests
+- `beforeEach`: Individual setup when needed
+- `afterEach`: Individual cleanup when needed
 
-## 🎯 Exemplos de Uso
+## 🎯 Usage Examples
 
-### Teste Otimizado (Recomendado)
+### Optimized Test (Recommended)
 ```javascript
 const { test, expect } = require('../fixtures/complete.fixture');
 
-test('Meu teste', async ({ authenticatedPage, inventoryPage, cartPage }) => {
-  // Teste já começa logado, limpo e com todas as páginas disponíveis
+test('My test', async ({ authenticatedPage, inventoryPage, cartPage }) => {
+  // Test starts already logged in, clean and with all pages available
   await inventoryPage.addItemToCartByIndex(0);
   await cartPage.goto();
 });
 ```
 
-## ⚙️ Tecnologias
+## ⚙️ Technologies
 
 - Playwright
 - Node.js
 - JavaScript
 
-## 👤 Autor
+## 👤 Author
 
 RoniQA

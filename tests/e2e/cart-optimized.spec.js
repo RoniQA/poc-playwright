@@ -1,15 +1,15 @@
 const { test, expect } = require('../fixtures/complete.fixture');
 
-test.describe('SauceDemo Carrinho - Otimizado com Complete Fixture', () => {
-  
-  test('Adicionar um item ao carrinho', async ({ authenticatedPage, inventoryPage, cartPage }) => {
+test.describe('SauceDemo Cart - Optimized with Complete Fixture', () => {
+
+  test('Add one item to cart', async ({ authenticatedPage, inventoryPage, cartPage }) => {
     await inventoryPage.addItemToCartByIndex(0);
     expect(await inventoryPage.getCartBadgeCount()).toBe(1);
     await cartPage.goto();
     expect(await cartPage.getCartItemsCount()).toBe(1);
   });
 
-  test('Adicionar e remover itens do carrinho', async ({ authenticatedPage, inventoryPage, cartPage }) => {
+  test('Add and remove items from cart', async ({ authenticatedPage, inventoryPage, cartPage }) => {
     await inventoryPage.addItemToCartByIndex(0);
     await inventoryPage.addItemToCartByIndex(1);
     expect(await inventoryPage.getCartBadgeCount()).toBe(2);
@@ -19,7 +19,7 @@ test.describe('SauceDemo Carrinho - Otimizado com Complete Fixture', () => {
     expect(await cartPage.getCartItemsCount()).toBe(0);
   });
 
-  test('Adicionar múltiplos itens e validar badge', async ({ authenticatedPage, inventoryPage, cartPage }) => {
+  test('Add multiple items and validate badge', async ({ authenticatedPage, inventoryPage, cartPage }) => {
     for (let i = 0; i < 3; i++) {
       await inventoryPage.addItemToCartByIndex(i);
     }
@@ -28,7 +28,7 @@ test.describe('SauceDemo Carrinho - Otimizado com Complete Fixture', () => {
     expect(await cartPage.getCartItemsCount()).toBe(3);
   });
 
-  test('Esvaziar o carrinho', async ({ authenticatedPage, inventoryPage, cartPage }) => {
+  test('Empty the cart', async ({ authenticatedPage, inventoryPage, cartPage }) => {
     await inventoryPage.addItemToCartByIndex(0);
     await inventoryPage.addItemToCartByIndex(1);
     await cartPage.goto();

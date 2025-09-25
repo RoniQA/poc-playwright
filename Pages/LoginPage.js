@@ -8,16 +8,16 @@ class LoginPage {
   }
 
   /**
-   * Navega para a página de login do SauceDemo.
+   * Navigates to the SauceDemo login page.
    */
   async goto() {
     await this.page.goto('https://www.saucedemo.com/');
   }
 
   /**
-   * Realiza login com usuário e senha.
-   * @param {string} username Usuário a ser utilizado no login
-   * @param {string} password Senha a ser utilizada no login
+   * Performs login with username and password.
+   * @param {string} username Username to be used in login
+   * @param {string} password Password to be used in login
    */
   async login(username, password) {
     await this.usernameInput.fill(username);
@@ -26,8 +26,8 @@ class LoginPage {
   }
 
   /**
-   * Realiza login preenchendo apenas o usuário.
-   * @param {string} username Usuário a ser utilizado no login
+   * Performs login filling only the username.
+   * @param {string} username Username to be used in login
    */
   async loginWithOnlyUsername(username) {
     await this.usernameInput.fill(username);
@@ -35,8 +35,8 @@ class LoginPage {
   }
 
   /**
-   * Realiza login preenchendo apenas a senha.
-   * @param {string} password Senha a ser utilizada no login
+   * Performs login filling only the password.
+   * @param {string} password Password to be used in login
    */
   async loginWithOnlyPassword(password) {
     await this.passwordInput.fill(password);

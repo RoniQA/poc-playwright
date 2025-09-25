@@ -3,7 +3,7 @@ const { LoginPage } = require('../../Pages/LoginPage');
 const { InventoryPage } = require('../../Pages/InventoryPage');
 const { CartPage } = require('../../Pages/CartPage');
 
-test.describe('SauceDemo Carrinho - Page Object Model', () => {
+test.describe('SauceDemo Cart - Page Object Model', () => {
   let loginPage;
   let inventoryPage;
   let cartPage;
@@ -17,14 +17,14 @@ test.describe('SauceDemo Carrinho - Page Object Model', () => {
     await expect(page).toHaveURL(/inventory.html/);
   });
 
-  test('Adicionar um item ao carrinho', async ({ page }) => {
+  test('Add one item to cart', async ({ page }) => {
     await inventoryPage.addItemToCartByIndex(0);
     expect(await inventoryPage.getCartBadgeCount()).toBe(1);
     await cartPage.goto();
     expect(await cartPage.getCartItemsCount()).toBe(1);
   });
 
-  test('Adicionar e remover itens do carrinho', async ({ page }) => {
+  test('Add and remove items from cart', async ({ page }) => {
     await inventoryPage.addItemToCartByIndex(0);
     await inventoryPage.addItemToCartByIndex(1);
     expect(await inventoryPage.getCartBadgeCount()).toBe(2);
@@ -34,7 +34,7 @@ test.describe('SauceDemo Carrinho - Page Object Model', () => {
     expect(await cartPage.getCartItemsCount()).toBe(0);
   });
 
-  test('Adicionar múltiplos itens e validar badge', async ({ page }) => {
+  test('Add multiple items and validate badge', async ({ page }) => {
     for (let i = 0; i < 3; i++) {
       await inventoryPage.addItemToCartByIndex(i);
     }
@@ -43,7 +43,7 @@ test.describe('SauceDemo Carrinho - Page Object Model', () => {
     expect(await cartPage.getCartItemsCount()).toBe(3);
   });
 
-  test('Esvaziar o carrinho', async ({ page }) => {
+  test('Empty the cart', async ({ page }) => {
     await inventoryPage.addItemToCartByIndex(0);
     await inventoryPage.addItemToCartByIndex(1);
     await cartPage.goto();

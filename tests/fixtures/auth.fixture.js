@@ -4,46 +4,46 @@ const { MenuPage } = require('../../Pages/MenuPage');
 const { InventoryPage } = require('../../Pages/InventoryPage');
 const { CartPage } = require('../../Pages/CartPage');
 
-// Fixture para autenticação com beforeAll e afterAll
+// Fixture for authentication with beforeAll and afterAll
 const test = base.extend({
-  // Fixture para LoginPage
+  // Fixture for LoginPage
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
     await use(loginPage);
   },
 
-  // Fixture para MenuPage
+  // Fixture for MenuPage
   menuPage: async ({ page }, use) => {
     const menuPage = new MenuPage(page);
     await use(menuPage);
   },
 
-  // Fixture para InventoryPage
+  // Fixture for InventoryPage
   inventoryPage: async ({ page }, use) => {
     const inventoryPage = new InventoryPage(page);
     await use(inventoryPage);
   },
 
-  // Fixture para CartPage
+  // Fixture for CartPage
   cartPage: async ({ page }, use) => {
     const cartPage = new CartPage(page);
     await use(cartPage);
   },
 
-  // Fixture para página autenticada
+  // Fixture for authenticated page
   authenticatedPage: async ({ page, loginPage, menuPage }, use) => {
-    // beforeAll - Login uma vez para todos os testes
+    // beforeAll - Login once for all tests
     await loginPage.goto();
     await loginPage.login('standard_user', 'secret_sauce');
     
     await use(page);
     
-    // afterAll - Limpar estado após cada teste
+    // afterAll - Clean state after each test
     try {
       await menuPage.resetAppState();
     } catch (error) {
-      // Ignora erros de limpeza se a página não estiver disponível
-      console.log('Estado já estava limpo ou página não disponível');
+      // Ignore cleanup errors if page is not available
+      console.log('State was already clean or page not available');
     }
   },
 });
