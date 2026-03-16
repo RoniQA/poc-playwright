@@ -11,7 +11,8 @@ class LoginPage {
    * Navigates to the SauceDemo login page.
    */
   async goto() {
-    await this.page.goto('https://www.saucedemo.com/');
+    await this.page.goto('/');
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   /**

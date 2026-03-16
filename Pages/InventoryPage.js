@@ -9,7 +9,7 @@ class InventoryPage {
     this.sortDropdown = page.locator('[data-test="product_sort_container"]');
     this.productNames = page.locator('.inventory_item_name');
     this.productPrices = page.locator('.inventory_item_price');
-    this.productImages = page.locator('.inventory_item_img');
+    this.productImages = page.locator('.inventory_item img');
   }
 
   /** Adds an item to cart by index. */
@@ -94,7 +94,9 @@ class InventoryPage {
 
   /** Checks if a product image is loaded. */
   async isProductImageLoaded(index) {
-    return await this.productImages.nth(index).isVisible();
+    const img = this.productImages.nth(index);
+    await img.waitFor({ state: 'visible' });
+    return await img.evaluate(el => el.complete && el.naturalWidth > 0 && el.naturalHeight > 0);
   }
 }
 
