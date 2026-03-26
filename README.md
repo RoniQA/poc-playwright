@@ -13,9 +13,11 @@ poc-playwright/
 │   │   ├── cart.spec.js
 │   │   ├── checkout.spec.js
 │   │   ├── menu.spec.js
-│   │   ├── inventory-optimized.spec.js    # Optimized example
-│   │   ├── cart-optimized.spec.js         # Optimized example
-│   │   └── checkout-optimized.spec.js     # Optimized example
+│   │   ├── login-optimized.spec.js        # Optimized example
+│   │   ├── menu-optimized.spec.js         # Optimized example
+│   │   ├── inventory-optimized.spec.js   # Optimized example
+│   │   ├── cart-optimized.spec.js        # Optimized example
+│   │   └── checkout-optimized.spec.js    # Optimized example
 │   ├── fixtures/            # Shared fixtures
 │   │   ├── global.fixture.js              # Fixtures for all pages
 │   │   ├── auth.fixture.js                # Authentication fixture
@@ -65,6 +67,17 @@ To open the report, run:
 npm run report
 ```
 
+## 🤖 CI/CD (GitHub Actions)
+This repo includes a GitHub Actions workflow at `.github/workflows/playwright.yml`.
+
+On `push` and `pull_request`, it will:
+- Install dependencies and Playwright browsers
+- Run `npx playwright test`
+- Generate the Playwright HTML report in `playwright-report/`
+- Upload artifacts:
+  - `playwright-report/` (HTML report offline)
+  - `test-results/` (JSON plus traces/screenshots/videos on failure)
+
 ## 🔒 Implemented Best Practices
 
 - ✅ **Organized structure**: Tests separated in dedicated folder
@@ -73,7 +86,7 @@ npm run report
 - ✅ **Optimized configuration**: Timeouts, retries and reports configured
 - ✅ **Separation by functionality**: Tests organized by domain
 - ✅ **Documentation**: Specific README for test structure
-- ✅ **Optimization with beforeAll/afterAll**: Efficient setup and teardown
+- ✅ **Optimization with fixtures**: Efficient setup/teardown using Playwright fixtures
 - ✅ **Test isolation**: Automatic state cleanup between tests
 - ✅ **Complete fixture**: Maximum optimization with automatic setup
 - ✅ **Pure JavaScript**: No TypeScript dependencies
@@ -86,19 +99,17 @@ npm run report
 - Better readability
 
 ### Optimized Authentication
-- Login executed once per test suite
-- Automatic state cleanup after each test
-- Significant reduction in execution time
+- Login executed automatically by fixtures for tests that require authentication
+- Automatic state cleanup after each test (when running inside the SauceDemo app)
+- Significant reduction in execution time by removing repeated login steps
 
 ### Complete Fixture ⭐ **RECOMMENDED**
 - Combines automatic authentication with all pages
-- Automatic setup and teardown
+- Automatic setup and teardown (via the `authenticatedPage` fixture)
 - Maximum performance optimization
 - Easy to use in any test
 
 ### Strategic Hooks
-- `beforeAll`: Global setup for test suite
-- `afterAll`: Final cleanup after all tests
 - `beforeEach`: Individual setup when needed
 - `afterEach`: Individual cleanup when needed
 
