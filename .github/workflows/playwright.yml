@@ -5,38 +5,77 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: playwright-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
 
-      - name: Run Playwright tests (HTML report)
-        run: npx playwright test --reporter=html
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          CI: true
 
-      - name: List files for debug
-        run: ls -l
-
-      - name: List report folder
-        run: ls -l playwright-report || echo "No report folder"
-
-      - name: Upload Playwright HTML report
+      - name: Upload HTML report (Playwright show-report)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report/
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Upload test results (JSON, traces, screenshots, videos)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "## Relatório Playwright (CI)"
+            echo ""
+            echo "Este workflow gera os mesmos outputs que em local:"
+            echo ""
+            echo "| Artefacto | Conteúdo |"
+            echo "|-----------|----------|"
+            echo "| \`playwright-report\` | Relatório **HTML** interativo (equivalente a \`npx playwright show-report\`). |"
+            echo "| \`test-results\` | \`results.json\`, e em falhas: traces, screenshots e vídeos. |"
+            echo ""
+            echo "### Ver o relatório HTML offline"
+            echo "1. Descarregue o artefacto **playwright-report** desta execução."
+            echo "2. Descompacte e execute: \`npx playwright show-report caminho/para/playwright-report\`"
+            echo ""
+            echo "Em PRs, falhas também aparecem como **anotações** (reporter \`github\`)."
+          } >> "$GITHUB_STEP_SUMMARY"

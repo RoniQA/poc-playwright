@@ -1,5 +1,7 @@
 const { defineConfig } = require('@playwright/test');
 
+const isCI = !!process.env.CI;
+
 module.exports = defineConfig({
   testDir: './tests',
   use: {
@@ -13,11 +15,19 @@ module.exports = defineConfig({
   },
   retries: 1,
   workers: 1, // Reduce to 1 worker to avoid interference
-  reporter: [
-    ['list'], 
-    ['html', { outputFolder: 'playwright-report' }],
-    ['json', { outputFile: 'test-results/results.json' }]
-  ],
+  // CI: github = anotações no PR; line = log compacto. Local: list detalhado.
+  reporter: isCI
+    ? [
+        ['github'],
+        ['line'],
+        ['html', { outputFolder: 'playwright-report', open: 'never' }],
+        ['json', { outputFile: 'test-results/results.json' }],
+      ]
+    : [
+        ['list'],
+        ['html', { outputFolder: 'playwright-report', open: 'never' }],
+        ['json', { outputFile: 'test-results/results.json' }],
+      ],
   outputDir: 'test-results/',
   timeout: 30000,
 }); 
