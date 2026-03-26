@@ -37,6 +37,7 @@ class MenuPage {
   async resetAppState() {
     await this.openMenu();
     await this.resetAppStateLink.click();
+    await this.closeMenu().catch(() => {});
   }
 
   /**

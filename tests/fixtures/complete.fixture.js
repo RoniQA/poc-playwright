@@ -44,8 +44,13 @@ const test = base.extend({
     await loginPage.login('standard_user', 'secret_sauce');
     
     await use(page);
-    
-    // Automatic cleanup
+
+    // Only reset when the app menu exists (skip login root, external sites — avoids ~10s action timeouts)
+    const url = page.url();
+    const canReset =
+      /saucedemo\.com/i.test(url) && /inventory|cart|checkout/i.test(url);
+    if (!canReset) return;
+
     try {
       await menuPage.resetAppState();
     } catch (error) {

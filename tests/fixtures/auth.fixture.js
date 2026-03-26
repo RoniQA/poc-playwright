@@ -37,12 +37,15 @@ const test = base.extend({
     await loginPage.login('standard_user', 'secret_sauce');
     
     await use(page);
-    
-    // afterAll - Clean state after each test
+
+    const url = page.url();
+    const canReset =
+      /saucedemo\.com/i.test(url) && /inventory|cart|checkout/i.test(url);
+    if (!canReset) return;
+
     try {
       await menuPage.resetAppState();
     } catch (error) {
-      // Ignore cleanup errors if page is not available
       console.log('State was already clean or page not available');
     }
   },
